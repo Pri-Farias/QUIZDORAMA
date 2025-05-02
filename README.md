@@ -2,7 +2,7 @@
 
 *"Porque amar doramas é uma arte... e adivinhar cenas também!"*
 
-![K-Quiz Mania Preview](./28363912-382d-40ab-84b7-252939a0cd58.png)
+![K-Quiz Mania Preview]([./28363912-382d-40ab-84b7-252939a0cd58.png](https://i.postimg.cc/0NDfYDHY/Captura-de-tela-2025-05-02-172930.png))
 
 ## 📌 Sobre o Projeto
 
