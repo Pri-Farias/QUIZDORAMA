@@ -1,0 +1,425 @@
+/* Reset Básico e Fontes */
+/* Reset Básico e Fontes (permanece igual) */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  /* O background gradient agora será um fallback ou usado nas telas de quiz/resultado */
+  color: #333;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+  position: relative; /* Necessário para z-index do vídeo funcionar bem */
+  overflow-x: hidden; /* Evita barras de rolagem horizontais */
+  /* Aplicar o gradient aqui como padrão */
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  transition: background 0.5s ease; /* Transição suave se o fundo mudar */
+}
+
+/* Estilos do Vídeo de Fundo */
+#background-video {
+  position: fixed; /* Cobre toda a janela */
+  top: 80%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  min-width: 100%;
+  min-height: 80%;
+  width: auto;
+  height: auto;
+  z-index: -100; /* Fica atrás de todo o conteúdo */
+  object-fit: contain; /* Cobre a área sem distorcer */
+  opacity: 0; /* Começa invisível */
+  transition: opacity 0.8s ease-in-out; /* Transição suave */
+}
+
+/* --- ESTILOS CONDICIONAIS (Controlados via JS com classes no BODY) --- */
+
+/* Estilos quando o MENU INICIAL está ativo */
+body.menu-active #background-video {
+  opacity: 1; /* Mostra o vídeo */
+}
+
+body.menu-active {
+   /* Pode remover o background gradient se o vídeo for o fundo principal */
+   background: #000; /* Um fundo escuro simples caso o vídeo demore a carregar */
+}
+
+body.menu-active .container {
+  /* Torna o fundo do container semi-transparente para ver o vídeo */
+  background-color: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(5px); /* Efeito de desfoque (opcional, bom suporte) */
+  -webkit-backdrop-filter: blur(5px); /* Para Safari */
+  border: 1px solid rgba(255, 255, 255, 0.2); /* Borda sutil */
+}
+
+body.menu-active h1 {
+  color: #ffffff; /* Cor clara para contraste com vídeo */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6); /* Sombra para legibilidade */
+}
+body.menu-active h2 {
+  color: #f0f0f0; /* Cor clara */
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+body.menu-active .btn-categoria {
+  background-color: rgba(127, 90, 193, 0.8); /* Roxo com transparência */
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #fff;
+}
+body.menu-active .btn-categoria:hover {
+  background-color: rgba(106, 68, 165, 0.9); /* Mais opaco no hover */
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+
+/* Estilos quando o QUIZ ou RESULTADOS estão ativos (volta ao normal) */
+body.quiz-active,
+body.results-active {
+  /* Restaura o fundo gradient */
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+body.quiz-active .container,
+body.results-active .container {
+  /* Restaura o fundo branco sólido do container */
+  background-color: #ffffff;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border: none; /* Remove a borda */
+}
+
+body.quiz-active h1,
+body.results-active h1 {
+  color: #5a408c; /* Restaura cor original */
+  text-shadow: none; /* Remove sombra */
+}
+
+body.quiz-active h2,
+body.results-active h2 {
+  color: #444; /* Restaura cor original */
+   text-shadow: none;
+}
+#music-controls {
+  display: none; /* Escondido por padrão */
+  justify-content: center; /* Centraliza os itens */
+  align-items: center; /* Alinha verticalmente */
+  gap: 10px; /* Espaço entre os controles */
+  margin-top: 25px; /* Espaço acima dos controles */
+  padding: 10px;
+  background-color: rgba(0, 0, 0, 0.2); /* Fundo levemente escuro */
+  border-radius: 50px; /* Bordas arredondadas */
+  max-width: 300px; /* Largura máxima */
+  margin-left: auto; /* Centraliza o container */
+  margin-right: auto;
+}
+
+/* Mostra os controles apenas quando o menu está ativo */
+body.menu-active #music-controls {
+  display: flex;
+}
+
+.music-btn {
+  background-color: rgba(255, 255, 255, 0.7);
+  color: #5a408c; /* Roxo escuro */
+  border: none;
+  border-radius: 50%; /* Botão circular */
+  width: 40px;
+  height: 40px;
+  font-size: 1.1em;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.3s ease;
+}
+
+.music-btn:hover {
+  background-color: rgba(255, 255, 255, 0.9);
+}
+
+.music-icon {
+  color: rgba(255, 255, 255, 0.8); /* Cor branca semi-transparente */
+  font-size: 1.1em;
+}
+
+#volume-slider {
+  width: 120px; /* Largura do slider */
+  height: 5px; /* Altura da barra */
+  cursor: pointer;
+  accent-color: #ff8c42; /* Cor do controle deslizante (laranja) */
+  background: rgba(255, 255, 255, 0.3); /* Fundo da barra */
+  border-radius: 5px;
+  outline: none; /* Remove borda de foco padrão */
+}
+
+/* Estilização básica para Webkit (Chrome, Safari) */
+#volume-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 15px;
+  height: 15px;
+  background: #ff8c42; /* Laranja */
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+/* Estilização básica para Firefox */
+#volume-slider::-moz-range-thumb {
+  width: 15px;
+  height: 15px;
+  background: #ff8c42; /* Laranja */
+  border-radius: 50%;
+  cursor: pointer;
+  border: none;
+}
+
+/* (Restante do CSS permanece igual: .container, #quiz-container, #resultado-container, botões internos, etc.) */
+/* ... Cole aqui o restante do seu CSS original ... */
+
+/* Garanta que o container principal tenha z-index maior que o vídeo (se necessário) */
+.container {
+  background-color: #ffffff; /* Fundo padrão (será sobrescrito por body.menu-active) */
+  padding: 30px 40px;
+  border-radius: 15px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 650px;
+  text-align: center;
+  position: relative; /* Garante que fique acima do vídeo */
+  z-index: 1;
+  transition: background-color 0.5s ease; /* Transição suave */
+}
+
+/* ... (Restante do CSS original) ... */
+
+/* Container Principal */
+
+h1 {
+  color: #5a408c; /* Roxo mais escuro */
+  margin-bottom: 30px;
+  font-weight: 600;
+}
+
+h2 {
+  color: #444;
+  margin-bottom: 20px;
+  font-weight: 400;
+}
+
+h3 {
+  color: #555;
+  margin-bottom: 25px;
+  min-height: 50px; /* Espaço para texto da pergunta */
+  font-weight: 400;
+}
+
+/* Estados Visível/Oculto */
+.hidden {
+  display: none;
+}
+
+.visible {
+  display: block; /* Ou flex, grid, etc., conforme necessário */
+}
+
+/* Menu Inicial */
+#menu-inicial {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.btn-categoria {
+  background-color: #7f5ac1; /* Roxo médio */
+  color: white;
+  border: none;
+  padding: 15px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1.1em;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  font-weight: 400;
+}
+
+.btn-categoria:hover {
+  background-color: #6a44a5; /* Roxo mais escuro no hover */
+  transform: translateY(-2px);
+}
+
+/* Container do Quiz */
+#quiz-container {
+  /* Estilos gerais do quiz aqui */
+}
+
+#timer-display {
+  font-weight: 800;
+  color: #ff8c42; /* Laranja para destaque */
+  background-color: #f0f0f0;
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+
+#time-left {
+  font-size: 1.5em; /* Tamanho maior para o número */
+  color: #5a408c; /* Roxo escuro */
+  font-weight: 700; /* Negrito */ 
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2); /* Sombra leve */
+  
+  /* Estilo específico para o número, se desejar */
+}
+
+/* Opcional: Estilo quando o tempo está acabando */
+#timer-display.low-time {
+  color: #dc3545; /* Vermelho */
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+#pergunta-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  font-size: 0.9em;
+  color: #777;
+}
+
+#midia-container {
+  margin-bottom: 25px;
+  min-height: 200px; /* Ajuste conforme necessário */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#imagem-pergunta {
+  max-width: 100%;
+  max-height: 300px; /* Limita a altura da imagem */
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+#audio-pergunta {
+  width: 80%; /* Ou ajuste conforme preferir */
+}
+
+/* Opções de Resposta */
+#opcoes-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* 2 colunas */
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.btn-opcao {
+  background-color: #f0f0f0;
+  border: 2px solid #ddd;
+  color: #555;
+  padding: 12px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1em;
+  transition: all 0.3s ease;
+  text-align: center; /* Garante centralização */
+}
+
+.btn-opcao:hover:not([disabled]) {
+  background-color: #e0e0e0;
+  border-color: #ccc;
+}
+
+.btn-opcao:disabled {
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.btn-opcao.correct {
+  background-color: #a7e9af; /* Verde claro */
+  border-color: #6fbf7b;
+  color: #2a5c32;
+  font-weight: 600;
+}
+
+.btn-opcao.incorrect {
+  background-color: #f8baba; /* Vermelho claro */
+  border-color: #e77474;
+  color: #7a2c2c;
+}
+
+/* Feedback */
+.feedback-message {
+  min-height: 20px; /* Evita que o layout pule */
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+/* Botões Gerais */
+.btn {
+  background-color: #ff8c42; /* Laranja */
+  color: white;
+  border: none;
+  padding: 12px 30px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1.1em;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  margin-top: 10px; /* Espaçamento acima do botão */
+  font-weight: 600;
+}
+
+.btn:hover {
+  background-color: #f5762c; /* Laranja mais escuro */
+  transform: translateY(-2px);
+}
+
+/* Resultados */
+#resultado-container h2 {
+  color: #5a408c;
+  margin-bottom: 15px;
+}
+
+#pontuacao-final {
+  font-size: 1.3em;
+  color: #333;
+  margin-bottom: 25px;
+}
+
+/* Responsividade */
+@media (max-width: 600px) {
+  .container {
+      padding: 20px;
+  }
+
+  h1 {
+      font-size: 1.8em;
+  }
+
+  #opcoes-container {
+      grid-template-columns: 1fr; /* 1 coluna em telas menores */
+      gap: 10px;
+  }
+
+  .btn-categoria, .btn-opcao, .btn {
+      font-size: 1em;
+      padding: 12px 15px;
+  }
+
+  #midia-container {
+      min-height: 150px; /* Ajuste */
+  }
+
+  #imagem-pergunta {
+      max-height: 200px; /* Ajuste */
+  }
+}
